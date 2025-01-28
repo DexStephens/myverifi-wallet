@@ -1,0 +1,14 @@
+{
+  "name": "myVerifi Wallet",
+  "description": "Wallet for myVerifi Credentials",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": ["storage", "notifications"]
+}
