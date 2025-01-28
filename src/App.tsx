@@ -6,7 +6,8 @@ import "./App.css";
 
 //TODO: Initial setup with subscription id, email
 //TODO: Ability to add accounts
-//TODO: Ability to accept credential requests using a specific account
+//TODO: Ability to accept issue credential requests using a specific account
+//TODO: Ability to accept credential verification requests using a specific account
 //TODO: Ability to view credentials by account
 
 function App() {
