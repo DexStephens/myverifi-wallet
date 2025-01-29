@@ -6,8 +6,10 @@ import { registerUser } from "../utils/registration.util";
 
 export function Registration({
   setWallet,
+  onBack,
 }: {
   setWallet: React.Dispatch<React.SetStateAction<Wallet | null>>;
+  onBack(): void;
 }) {
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,8 +38,8 @@ export function Registration({
 
   return (
     <div className="registration">
-      <h2>Welcome to myVerifi Wallet</h2>
-      <p>Please register to get started</p>
+      <button onClick={onBack}>Back</button>
+      <h3>Register</h3>
       <form onSubmit={handleSubmit}>
         <input
           ref={inputRef}

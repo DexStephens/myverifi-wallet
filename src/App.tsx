@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Registration } from "./components/Registration";
 import { getWallet } from "./utils/storage.util";
 import { Wallet } from "../types";
+import { Landing } from "./components/Landing";
+import { Login } from "./components/Login";
 import "./App.css";
 
 //TODO: Initial setup with subscription id, email
@@ -13,6 +15,8 @@ import "./App.css";
 function App() {
   const [wallet, setWallet] = useState<Wallet | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const initWallet = async () => {
@@ -29,7 +33,16 @@ function App() {
   }
 
   if (!wallet) {
-    return <Registration setWallet={setWallet} />;
+    return showRegistration ? (
+      <Registration setWallet={setWallet} onBack={() => setShowRegistration(false)}/>
+    ) : showLogin ? (
+      <Login onBack={() => setShowLogin(false)}/>
+    ) : (
+      <Landing 
+      onRegister={() => setShowRegistration(true)} 
+      onLogin={() => setShowLogin(true)} 
+      />
+    );
   }
 
   return (
