@@ -34,6 +34,5 @@ export interface Account {
 export interface Wallet {
   id: UUID;
   email: string;
-  subscriptionId: string;
   accounts: Account[];
 }

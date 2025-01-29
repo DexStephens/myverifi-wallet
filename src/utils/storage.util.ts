@@ -13,7 +13,6 @@ export async function getWallet() {
 export async function storeWallet(wallet: Wallet) {
   try {
     await chrome.storage.local.set({ wallet });
-    await getWallet();
   } catch (e) {
     console.error(e);
   }

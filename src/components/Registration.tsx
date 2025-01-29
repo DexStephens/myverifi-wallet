@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Wallet } from "../../types";
-import { storeWallet } from "../utils/storage.util";
 import { v4 as uuidv4 } from "uuid";
+import { storeWallet } from "../utils/storage.util";
+import { registerUser } from "../utils/registration.util";
 
 export function Registration({
   setWallet,
@@ -17,9 +18,12 @@ export function Registration({
     const newWallet: Wallet = {
       id: uuidv4(),
       email,
-      subscriptionId: "", // This will be set later
       accounts: [],
     };
+
+    const response = await registerUser(email);
+
+    console.log("Registration response", response);
 
     await storeWallet(newWallet);
 
