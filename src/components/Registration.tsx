@@ -6,11 +6,14 @@ import { registerUser } from "../utils/registration.util";
 
 export function Registration({
   setWallet,
+  onBack,
 }: {
   setWallet: React.Dispatch<React.SetStateAction<Wallet | null>>;
+  onBack(): void;
 }) {
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,13 +24,16 @@ export function Registration({
       accounts: [],
     };
 
-    const response = await registerUser(email);
-
-    console.log("Registration response", response);
-
-    await storeWallet(newWallet);
-
-    setWallet(newWallet);
+    try {
+      const response = await registerUser(email);
+      console.log("Registration response", response);
+      await storeWallet(newWallet);
+      setWallet(newWallet);
+    } catch (e) {
+      console.error("Failed to register", e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -36,8 +42,10 @@ export function Registration({
 
   return (
     <div className="registration">
-      <h2>Welcome to myVerifi Wallet</h2>
-      <p>Please register to get started</p>
+      <div className="back">
+        <button onClick={onBack}>Back</button>
+      </div>
+      <h3>Register</h3>
       <form onSubmit={handleSubmit}>
         <input
           ref={inputRef}
@@ -47,7 +55,9 @@ export function Registration({
           placeholder="Enter your email"
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
+        </button>
       </form>
     </div>
   );

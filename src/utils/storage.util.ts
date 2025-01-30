@@ -17,3 +17,11 @@ export async function storeWallet(wallet: Wallet) {
     console.error(e);
   }
 }
+
+export async function clearWallet() {
+  try {
+    await chrome.storage.local.remove("wallet");
+  } catch (e) {
+    console.error(e);
+  }
+}

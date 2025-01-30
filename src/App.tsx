@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Registration } from "./components/Registration";
-import { getWallet } from "./utils/storage.util";
-import { Wallet } from "../types";
+import { useWallet } from "./hooks/useWallet";
+import { Landing } from "./components/Landing";
+import { Login } from "./components/Login";
+import { Home } from "./components/Home";
 import "./App.css";
 
 //TODO: Initial setup with subscription id, email
@@ -11,32 +13,36 @@ import "./App.css";
 //TODO: Ability to view credentials by account
 
 function App() {
-  const [wallet, setWallet] = useState<Wallet | null>(null);
-  const [loading, setLoading] = useState(true);
+  // TODO: will need to update state management logic to take us back to the landing page when logging out
+  const { wallet, setWallet, loading, logout } = useWallet();
+  const [showRegistration, setShowRegistration] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
-  useEffect(() => {
-    const initWallet = async () => {
-      const storedWallet = await getWallet();
-      setWallet(storedWallet);
-      setLoading(false);
-    };
-
-    initWallet();
-  }, []);
+  const handleLogout = () => {
+    logout();
+    setShowRegistration(false);
+    setShowLogin(false);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (!wallet) {
-    return <Registration setWallet={setWallet} />;
+    return showRegistration ? (
+      <Registration setWallet={setWallet} onBack={() => setShowRegistration(false)}/>
+    ) : showLogin ? (
+      <Login onBack={() => setShowLogin(false)}/>
+    ) : (
+      <Landing 
+      onRegister={() => setShowRegistration(true)} 
+      onLogin={() => setShowLogin(true)} 
+      />
+    );
   }
 
   return (
-    <div>
-      <h1>Welcome, {wallet.email}</h1>
-      {/* Rest of your wallet UI */}
-    </div>
+    <Home wallet={wallet} onLogout={handleLogout}/>
   );
 }
 
