@@ -5,7 +5,9 @@ export function Login({
   }) {
     return (
       <div className="login">
-        <button onClick={onBack}>Back</button>
+        <div className="back">
+            <button onClick={onBack}>Back</button>
+        </div>
         <h2>Login</h2>
         <div className="verticalContainer">
           <button>Log In</button>

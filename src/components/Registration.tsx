@@ -38,7 +38,9 @@ export function Registration({
 
   return (
     <div className="registration">
-      <button onClick={onBack}>Back</button>
+      <div className="back">
+        <button onClick={onBack}>Back</button>
+      </div>
       <h3>Register</h3>
       <form onSubmit={handleSubmit}>
         <input

@@ -41,28 +41,28 @@
   color: #888;
 }
 
-.registration {
+.registration, .login, .landing {
   max-width: 400px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
 }
 
-.registration form {
+.registration form, .login form, .landing form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 2rem;
 }
 
-.registration input {
+.registration input, .login input {
   padding: 0.5rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.registration button {
+.registration button, .login button , .landing button {
   padding: 0.5rem 1rem;
   font-size: 1rem;
   background-color: #646cff;
@@ -72,7 +72,7 @@
   cursor: pointer;
 }
 
-.registration button:hover {
+.registration button:hover, .login button:hover, .landing button:hover {
   background-color: #535bf2;
 }
 
@@ -80,4 +80,24 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+.back {
+  display: flex;
+  flex-direction: horizontal;
+  justify-content: flex-start;
+}
+
+.back button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #242424;
+  color: white;
+  border: 2px solid #434343;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.back button:hover {
+  background-color: #6c6da4;
 }

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Registration } from "./components/Registration";
-import { getWallet } from "./utils/storage.util";
+import { getWallet, clearWallet } from "./utils/storage.util";
 import { Wallet } from "../types";
 import { Landing } from "./components/Landing";
 import { Login } from "./components/Login";
+import { Home } from "./components/Home";
 import "./App.css";
 
 //TODO: Initial setup with subscription id, email
@@ -17,6 +18,11 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+
+  const logout = async () => {
+    await clearWallet();
+    setWallet(null);
+  };
 
   useEffect(() => {
     const initWallet = async () => {
@@ -46,10 +52,7 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Welcome, {wallet.email}</h1>
-      {/* Rest of your wallet UI */}
-    </div>
+    <Home wallet={wallet} onLogout={() => logout()}/>
   );
 }
 
