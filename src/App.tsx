@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Registration } from "./components/Registration";
-import { getWallet, clearWallet } from "./utils/storage.util";
-import { Wallet } from "../types";
+import { useWallet } from "./hooks/useWallet";
 import { Landing } from "./components/Landing";
 import { Login } from "./components/Login";
 import { Home } from "./components/Home";
@@ -14,25 +13,16 @@ import "./App.css";
 //TODO: Ability to view credentials by account
 
 function App() {
-  const [wallet, setWallet] = useState<Wallet | null>(null);
-  const [loading, setLoading] = useState(true);
+  // TODO: will need to update state management logic to take us back to the landing page when logging out
+  const { wallet, setWallet, loading, logout } = useWallet();
   const [showRegistration, setShowRegistration] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
 
-  const logout = async () => {
-    await clearWallet();
-    setWallet(null);
+  const handleLogout = () => {
+    logout();
+    setShowRegistration(false);
+    setShowLogin(false);
   };
-
-  useEffect(() => {
-    const initWallet = async () => {
-      const storedWallet = await getWallet();
-      setWallet(storedWallet);
-      setLoading(false);
-    };
-
-    initWallet();
-  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -52,7 +42,7 @@ function App() {
   }
 
   return (
-    <Home wallet={wallet} onLogout={() => logout()}/>
+    <Home wallet={wallet} onLogout={handleLogout}/>
   );
 }
 

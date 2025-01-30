@@ -13,6 +13,7 @@ export function Registration({
 }) {
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,13 +24,16 @@ export function Registration({
       accounts: [],
     };
 
-    const response = await registerUser(email);
-
-    console.log("Registration response", response);
-
-    await storeWallet(newWallet);
-
-    setWallet(newWallet);
+    try {
+      const response = await registerUser(email);
+      console.log("Registration response", response);
+      await storeWallet(newWallet);
+      setWallet(newWallet);
+    } catch (e) {
+      console.error("Failed to register", e);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -51,7 +55,9 @@ export function Registration({
           placeholder="Enter your email"
           required
         />
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Registering..." : "Register"}
+        </button>
       </form>
     </div>
   );

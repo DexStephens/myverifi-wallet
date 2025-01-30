@@ -7,10 +7,6 @@ export function Home({
   wallet: Wallet;
   onLogout: () => void;
 }) {
-  if (!wallet) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div>
       <h1>Welcome, {wallet.email}</h1>
