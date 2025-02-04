@@ -36,3 +36,22 @@ export interface Wallet {
   email: string;
   accounts: Account[];
 }
+
+interface WalletRequest {
+  type: "issue" | "request";
+}
+
+export interface IssueRequest extends WalletRequest {
+  type: "issue";
+  name: string;
+  organization: string;
+}
+
+interface RequestRequest extends WalletRequest {
+  type: "request";
+  name: string;
+  organization: string;
+  credentials: string[];
+}
+
+export type WalletRequests = IssueRequest | RequestRequest;
