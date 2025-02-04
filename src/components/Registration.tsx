@@ -13,11 +13,14 @@ export function Registration({
   onBack(): void;
 }) {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
 
+  // DEXTER
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     const newWallet: Wallet = {
       id: uuidv4(),
@@ -26,7 +29,7 @@ export function Registration({
     };
 
     try {
-      const response = await registerUser(email);
+      const response = await registerUser(email, password);
       console.log("Registration response", response);
       await storeWallet(newWallet);
       setWallet(newWallet);
@@ -64,6 +67,8 @@ export function Registration({
           <TextField 
             fullWidth
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label="Password"
             variant="outlined"
             required

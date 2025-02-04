@@ -6,16 +6,19 @@ export function Login({ onBack }: { onBack(): void }) {
   const [email, setEmail] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [loading, setLoading] = useState(false);
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  // DEXTER
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const response = await loginUser(email);
+      const response = await loginUser(email, password);
       console.log("Login response", response);
       // Store wallet in local storage & call setWallet
     } catch (e) {
@@ -48,6 +51,8 @@ export function Login({ onBack }: { onBack(): void }) {
           <TextField 
             fullWidth
             type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             label="Password"
             variant="outlined"
             required
