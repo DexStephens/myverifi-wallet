@@ -1,26 +1,10 @@
 type UUID = string;
 
-export type Degree = {
-  level: string;
-  major: string;
-  institution: string;
-  year: number;
-  issueDate: Date;
-};
-
-export type Certification = {
-  name: string;
-  institution: string;
-  year: number;
-  issueDate: Date;
-  expirationDate?: Date;
-};
-
-export interface Credential {
+export interface Cred {
   id: string;
+  title: string;
   issuer: string;
   hash: string;
-  data: Degree | Certification;
 }
 
 export interface Account {
@@ -35,4 +19,9 @@ export interface Wallet {
   id: UUID;
   email: string;
   accounts: Account[];
+}
+
+export interface VerifyRequest {
+  organization: string;
+  comment: string;
 }

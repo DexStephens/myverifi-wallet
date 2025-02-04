@@ -3,6 +3,7 @@ import { Wallet } from "../../types";
 import { v4 as uuidv4 } from "uuid";
 import { storeWallet } from "../utils/storage.util";
 import { registerUser } from "../utils/registration.util";
+import { Container, Button, Typography, Stack, Box, TextField } from "@mui/material";
 
 export function Registration({
   setWallet,
@@ -41,24 +42,37 @@ export function Registration({
   }, []);
 
   return (
-    <div className="registration">
-      <div className="back">
-        <button onClick={onBack}>Back</button>
-      </div>
-      <h3>Register</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          ref={inputRef}
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Registering..." : "Register"}
-        </button>
-      </form>
-    </div>
+    <Container maxWidth="xs" sx={{ textAlign: "center", mt: 4 }}>
+      <Button onClick={onBack} variant="outlined" color="primary">
+        Back
+      </Button>
+      <Typography variant="h4" gutterBottom>
+        Register
+      </Typography>
+      <Stack spacing={2} direction="column" alignItems="center" sx={{ mt: 2, width: "100%" }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
+          <TextField
+            fullWidth
+            inputRef={inputRef}
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            label="Email"
+            variant="outlined"
+            required
+          />
+          <TextField 
+            fullWidth
+            type="password"
+            label="Password"
+            variant="outlined"
+            required
+          />
+          <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }} disabled={loading}>
+            {loading ? "Registering..." : "Register"}
+          </Button>
+        </Box>
+      </Stack>
+    </Container>
   );
 }
