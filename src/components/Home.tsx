@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { Cred, Wallet, WalletRequests } from "../../types";
+import { Cred, Wallet, VerifyRequest } from "../../types";
 import { testRequests, testCredentials } from "../utils/fakeData.util";
 import { RequestsList } from "./RequestsList";
 import { CredentialList } from "./CredentialList";
@@ -9,12 +9,12 @@ import { NavBar } from "./Navbar";
 
 export function Home({ wallet, onLogout }: { wallet: Wallet; onLogout: () => void }) {
   const [view, setView] = useState<"credentials" | "requests" | "profile">("credentials");
-  const [requests, setRequests] = useState<WalletRequests[]>([]);
+  const [requests, setRequests] = useState<VerifyRequest[]>([]);
   const [credentials, setCredentials] = useState<Cred[]>([]);
 
   useEffect(() => {
     const getRequests = async () => {
-      let storedRequests: WalletRequests[] = [];
+      let storedRequests: VerifyRequest[] = [];
       try {
         const { requests } = await chrome.storage.local.get("requests");
         if (requests) {

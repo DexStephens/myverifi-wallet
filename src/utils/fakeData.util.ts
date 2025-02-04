@@ -1,41 +1,18 @@
-import { WalletRequests, Cred } from "../../types";
+import { VerifyRequest, Cred } from "../../types";
 
-export const testRequests: WalletRequests[] = [
-  // Issue Requests
+export const testRequests: VerifyRequest[] = [
   {
-    type: "issue",
-    name: "John Doe",
-    organization: "University of California, Berkeley",
-  },
-  {
-    type: "issue",
-    name: "Jane Smith",
-    organization: "Stanford University",
-  },
-  {
-    type: "issue",
-    name: "Mike Johnson",
-    organization: "Massachusetts Institute of Technology",
-  },
-  // Wallet Requests
-  {
-    type: "request",
-    name: "John Doe",
     organization: "Meta",
-    credentials: ["degree", "certificate"],
+    comment: "Please verify that you have a degree and certificate.",
   },
   {
-    type: "request",
-    name: "Sarah Wilson",
     organization: "Google",
-    credentials: ["diploma", "certification"],
+    comment: "Please verify that you have just a certification.",
   },
   {
-    type: "request",
-    name: "Robert Brown",
     organization: "Apple",
-    credentials: ["degree", "license"],
-  },
+    comment: "Please verify that you have a degree and two certifications.",
+  }
 ];
 
 export const testCredentials: Cred[] = [

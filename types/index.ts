@@ -21,21 +21,7 @@ export interface Wallet {
   accounts: Account[];
 }
 
-interface WalletRequest {
-  type: "issue" | "request";
-}
-
-export interface IssueRequest extends WalletRequest {
-  type: "issue";
-  name: string;
+export interface VerifyRequest {
   organization: string;
+  comment: string;
 }
-
-interface RequestRequest extends WalletRequest {
-  type: "request";
-  name: string;
-  organization: string;
-  credentials: string[];
-}
-
-export type WalletRequests = IssueRequest | RequestRequest;
