@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
+import { Button, Typography, Container, Stack, AppBar, Toolbar } from "@mui/material";
 import { Wallet, WalletRequests } from "../../types";
 import { testRequests } from "../utils/fakeData.util";
 
-export function Home({
-  wallet,
-  onLogout,
-}: {
-  wallet: Wallet;
-  onLogout: () => void;
-}) {
+export function Home({ wallet, onLogout }: { wallet: Wallet; onLogout: () => void }) {
   const [view, setView] = useState<"requests" | "profile">("requests");
   const [requests, setRequests] = useState<WalletRequests[]>([]);
 
@@ -23,7 +18,6 @@ export function Home({
       } catch {
         // TODO: handle failure
       }
-
       setRequests(storedRequests.length > 0 ? storedRequests : testRequests);
     };
 
@@ -31,58 +25,35 @@ export function Home({
   }, []);
 
   return (
-    <div
-      style={{
-        height: "100vh",
-        flexDirection: "column",
-      }}
-    >
-      {/* Nav bar */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          position: "sticky",
-          top: 0,
-          zIndex: 1,
-        }}
-      >
-        <p style={{ fontSize: "smaller" }}>{wallet.email}</p>
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <button onClick={() => setView("requests")}>Requests</button>
-          <button onClick={() => setView("profile")}>Profile</button>
-        </div>
-      </div>
-      <div
-        style={{
-          flex: 1,
-          padding: "12px",
-          overflow: "auto",
-          minHeight: 0,
-        }}
-      >
+    <Container maxWidth="md" sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+      <AppBar position="sticky">
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography variant="body2">{wallet.email}</Typography>
+          <Stack direction="row" spacing={2}>
+            <Button color="inherit" onClick={() => setView("requests")}>Requests</Button>
+            <Button color="inherit" onClick={() => setView("profile")}>Profile</Button>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+      <Container sx={{ flex: 1, padding: 2, overflow: "auto" }}>
         {view === "requests" ? (
-          <div className="request-list">
-            {requests.map((request) => (
-              <div className="request-card">
-                <p>{request.type}</p>
-                <p>{request.name}</p>
-                <p>{request.organization}</p>
-                {/* {request instanceof IssueRequest && (
-                  <p>{request.credentials.join(", ")}</p>
-                )} */}
-              </div>
+          <Stack spacing={2}>
+            {requests.map((request, index) => (
+              <Stack key={index} sx={{ p: 2, border: "1px solid #ccc", borderRadius: 1 }}>
+                <Typography>{request.type}</Typography>
+                <Typography>{request.name}</Typography>
+                <Typography>{request.organization}</Typography>
+              </Stack>
             ))}
-          </div>
+          </Stack>
         ) : (
-          <div>
-            <h1>Profile</h1>
-            <p>Need list of credentials and ability to logout</p>
-            <button onClick={onLogout}>Logout</button>
-          </div>
+          <Stack spacing={2} alignItems="center">
+            <Typography variant="h4">Profile</Typography>
+            <Typography>Need list of credentials and ability to logout</Typography>
+            <Button variant="contained" color="secondary" onClick={onLogout}>Logout</Button>
+          </Stack>
         )}
-      </div>
-    </div>
+      </Container>
+    </Container>
   );
 }
