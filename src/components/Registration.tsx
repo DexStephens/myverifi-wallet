@@ -61,6 +61,13 @@ export function Registration({
             variant="outlined"
             required
           />
+          <TextField 
+            fullWidth
+            type="password"
+            label="Password"
+            variant="outlined"
+            required
+          />
           <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }} disabled={loading}>
             {loading ? "Registering..." : "Register"}
           </Button>
